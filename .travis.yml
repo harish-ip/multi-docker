@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before install:
+    - docker build -t harish-ip/react-test -f ./client/Dockerfile.dev ./client
+    
+scripts:
+    - docker run harish-ip/react-test npm test -- --coverage    
+
+after_success:
+    - docker build -t harish-ip/multi-client ./client
+    - docker build -t harish-ip/multi-nginx ./nginx
+    - docker build -t harish-ip/multi-server ./server
+    - docker build -t harish-ip/multi-worker ./worker
+# Log in to the docker CLI
+    - echo "$DOCKER_ID" | docker login -u "$DOCKER_ID" --password-stdin
+# Take those images and push them to docker hub   
+    - docker push harish-ip/multi-client
+    - docker push harish-ip/multi-nginx
+    - docker push harish-ip/multi-server
+    - docker push harish-ip/multi-worker
