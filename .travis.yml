@@ -9,10 +9,10 @@ scripts:
     - docker run harish-ip/react-test npm test -- --coverage    
 
 after_success:
-    - docker build -t harish-ip/multi-client ./client
-    - docker build -t harish-ip/multi-nginx ./nginx
-    - docker build -t harish-ip/multi-server ./server
-    - docker build -t harish-ip/multi-worker ./worker
+    - docker build -t harish279/multi-client ./client
+    - docker build -t harish279/multi-nginx ./nginx
+    - docker build -t harish279/multi-server ./server
+    - docker build -t harish279/multi-worker ./worker
 # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Take those images and push them to docker hub   
