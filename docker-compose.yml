@@ -20,6 +20,8 @@ services:
         ports: 
           - '3050:80'           
     api:
+        depends_on:
+            - postgres
         build: 
          dockerfile: Dockerfile.dev       
          context: ./server
@@ -27,7 +29,7 @@ services:
             - /app/node_modules
             - ./server:/app
         environment: 
-            - REDIS_HOST=redwis
+            - REDIS_HOST=redis
             - REDIS_PORT=6379
             - PGUSER=postgres
             - PGHOST=postgres
@@ -49,3 +51,6 @@ services:
         volumes:
             - /app/node_modules
             - ./client:/app
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379            
